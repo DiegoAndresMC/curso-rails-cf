@@ -1,51 +1,47 @@
+# frozen_string_literal: true
+
 class ArticlesController < ApplicationController
+  before_action :find_article, only: %i[show edit update destroy]
+  # tambien puede ser except: [:new, :create]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
 
-	before_action :find_article, only: [:show, :edit, :update, :destroy]
-	#tambien puede ser except: [:new, :create]
-	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  def index
+    @articles = Article.all
+  end
 
-	def index
-		@articles = Article.all		
-	end
+  def show; end
 
-	def show
-		
-	end
+  def edit; end
 
-	def edit
-		
-	end
-	def update
-		
-		@article.update(article_params)
-		redirect_to @article
-	end
+  def update
+    @article.update(article_params)
+    redirect_to @article
+  end
 
-	def new
-		@article = Article.new
-	end
+  def new
+    @article = Article.new
+  end
 
-	def create
-		@article = current_user.articles.create(article_params)
+  def create
+    @article = current_user.articles.create(article_params)
 
-		redirect_to @article
-	end
+    redirect_to @article
+  end
 
-	def destroy
-		@article.destroy
-		redirect_to root_path
-	end
+  def destroy
+    @article.destroy
+    redirect_to root_path
+  end
 
-	def from_author
-	@user = User.find(params[:user_id])
-	end
+  def from_author
+    @user = User.find(params[:user_id])
+  end
 
-	def find_article
-		@article = Article.find(params[:id])
-	end
+  def find_article
+    @article = Article.find(params[:id])
+  end
 
-	def article_params
-		params.require(:article).permit(:title,:content)		
-	end
-
+  def article_params
+    params.require(:article).permit(:title, :content)
+  end
 end
