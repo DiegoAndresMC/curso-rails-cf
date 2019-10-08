@@ -1,4 +1,4 @@
-# Practica Curso Ruby on Rails Codigo fcilito
+# Practica Curso Ruby on Rails
 
 * Crear Proyectos 
 
